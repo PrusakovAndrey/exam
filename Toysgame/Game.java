@@ -30,8 +30,7 @@ public class Game {
 
     // удалить игрушку из спискка по id
     private List<Toy> del_toy(int i) {
-        listToys.remove(i);
-        toy_count--;
+        listToys.get(i).setQuantity(listToys.get(i).getQuantity()-1);
         return listToys;
     }
 
@@ -65,7 +64,7 @@ public class Game {
     // непосредственно розыгрыш
     public void Give_a_Chance() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Крути барабан, посмотри какая игрушка тебе выпадет (Выбери скорость вращения барабана от 1 до 3)");
+        System.out.println("\nКрути барабан, посмотри какая игрушка тебе выпадет (Выбери скорость вращения барабана от 1 до 3)");
         int any = Integer.parseInt(scan.next());
     
         // создаю список доступных игрушек
@@ -76,21 +75,21 @@ public class Game {
             }
         }
 
-        System.out.println(ava);
             if (any >= 1 && any <= 3) {
                 Random rnd = new Random();
                 int num = rnd.nextInt(10);
                 if(ava.contains(num) != true){
                     System.out.println("ты проиграл ((");
                 }
-                else {
+                else{
                     System.out.println("ПОЗДРАВЛЯЮ!!! Вы выиграли игрушку: " + listToys.get(num-1).getName());
                     saveInFile(num-1);
                     del_toy(num-1);
-
                 }
             }
+
             else System.out.println("введенно некорректное значение");
 
         }
+        
 }

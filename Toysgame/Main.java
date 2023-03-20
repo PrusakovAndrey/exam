@@ -1,9 +1,13 @@
 package Toysgame;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main{
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         
         Toy Beast = new Toy(1,"Beast", 3, 6);
         Toy Lion = new Toy(2,"Lion", 18, 5);
@@ -22,12 +26,9 @@ public class Main{
         chance_game.add_toy(Robbot);
         chance_game.add_toy(Phone);
         chance_game.add_toy(MammyLongLegs);
-
-        chance_game.Give_a_Chance();
-        
-
+    
+        //chance_game.Give_a_Chance();
+        System.out.println(chance_game.getToy_count());
     }
 }
 
-
-    
