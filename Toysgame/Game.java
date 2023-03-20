@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class Game {
     private List<Toy> listToys = new ArrayList<>();
-    private List<Toy> available = new ArrayList<>();
     private int toy_count;
 
     public List<Toy> getToys() {
@@ -28,29 +27,19 @@ public class Game {
         toy_count++;
         return listToys;
     }
-    // создаю список доступных игрушек
-    public List<Integer> available() {
-        List<Integer> ava = new ArrayList<>();
-        for (int i=0; i<listToys.size(); i++){
-            if(listToys.get(i).getQuantity()>0){
-                ava.add(listToys.get(i).getWeight());
-            }
-        }
-        return ava;
-    }
 
-    // удалить игрушку из спискка по имени
-    private List<Toy> del_toy(Toy name) {
-        listToys.remove(name);
+    // удалить игрушку из спискка по id
+    private List<Toy> del_toy(int i) {
+        listToys.remove(i);
         toy_count--;
         return listToys;
     }
 
     // запись выигрышных игрушек в файл ".txt"
-    private void saveInFile() {
+    private void saveInFile(int i) {
         try (FileWriter writer = new FileWriter("wone_toys.txt", true)) {
-            String text = listToys.get(0).getName();
-            writer.write(text + "\n");
+            String text = listToys.get(i).getName();
+            writer.write(text + "\n");  
             writer.close();
         } catch (Exception ex) {
             System.out.println("Ошибка записи файла");
@@ -73,41 +62,35 @@ public class Game {
         }
     }
 
-    // Розыгрыш, с регулируемым шансом на победу
-    // если выигрыш, то записываем имя игрушки в файл
-    // и удаляем её из списка разыгрываемых игрушек
-    /**
-     * 
-     */
+    // непосредственно розыгрыш
     public void Give_a_Chance() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Крути барабан, посмотри какая игрушка тебе выпадет (Выбери скорость вращения барабана от 1 до 3)");
         int any = Integer.parseInt(scan.next());
-        if (any >= 1 && any <= 3) {
-            Random rnd = new Random();
-            int num = rnd.nextInt(10);
-            // создаю список доступных игрушек
-            List<Integer> ava = new ArrayList<>();
-            for (int i=0; i<listToys.size(); i++){
-                if(listToys.get(i).getQuantity()>0){
-                ava.add(listToys.get(i).getWeight());
+    
+        // создаю список доступных игрушек
+        List<Integer> ava = new ArrayList<>();
+        for (int i=0; i<listToys.size(); i++){
+            if(listToys.get(i).getQuantity()>0){
+                ava.add(listToys.get(i).getId());
+            }
+        }
+
+        System.out.println(ava);
+            if (any >= 1 && any <= 3) {
+                Random rnd = new Random();
+                int num = rnd.nextInt(10);
+                if(ava.contains(num) != true){
+                    System.out.println("ты проиграл ((");
+                }
+                else {
+                    System.out.println("ПОЗДРАВЛЯЮ!!! Вы выиграли игрушку: " + listToys.get(num-1).getName());
+                    saveInFile(num-1);
+                    del_toy(num-1);
+
                 }
             }
-        
-            if ( ava.contains(num) != true);
-                System.out.println("к сожалению, вы проиграли");
-            // } else if (num < any) {
-            //     for ()
-            //     System.out.println("поздравляю, вы выиграли!!!");
-            //     saveInFile();
-            //     delete_toy_in_listToy(listToys.get(0));
-            // }
-        } else {
-            System.out.println("Вы ввели не верное значение! попробуйте снова..");
-        }
-    }
+            else System.out.println("введенно некорректное значение");
 
-    public char[] getToys(int i) {
-        return null;
-    }
+        }
 }
