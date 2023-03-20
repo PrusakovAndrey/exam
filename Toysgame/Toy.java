@@ -1,10 +1,13 @@
-public class Toys {
+package Toysgame;
+
+
+public class Toy {
 
     private int id;
     private String name;
     private int quantity;
-    private double weight;
-    public Toys(int id, String name, int quantity, double weight) {
+    private int weight;
+    public Toy(int id, String name, int quantity, int weight) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -28,10 +31,10 @@ public class Toys {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
     @Override
